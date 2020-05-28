@@ -151,6 +151,8 @@ Figure 7. USART1 interrupt exception and Page 3: USART Page
 
 ​	Inside the game page, TIM4 is initialized to record the elapsed time of the game (that’s why it is initialized after we enter Game Page). If buffer is smaller and equal to 51 (ASCII Code of 3), the ball will bounce to the right, otherwise, the ball will bounce to the left, which is controlled by “xdir”. “xdir” refers to X-axis direction, “xdir = 1” ball moves to the right and x increases; “xdir = -1” ball moves to the left and x decreases. The angle of bounce is controlled by the increment of y. Basically, the larger the buffer number is, the bigger the y step is. In total, there are 8 different initial directions as shown in the Figure8.
 
+![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/direction.jpg)
+
 Figure 8. 8 different initial directions for the ball
 
 
@@ -454,3 +456,23 @@ Figure 15. TIM4: Update strings of Number of Bounces, Upper and Lower Player Sco
 
 
 ​	By now, all the functions have already been achieved.
+
+
+
+### Test Result
+
+![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/Welcome.png)
+
+Figure 16. Welcome Page
+
+
+
+![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/Easy\ Hard.png)
+
+Figure 17. Difficulty Level Page: Easy & Hard
+
+
+
+![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/USART.png)
+
+Figure 18. USART Page

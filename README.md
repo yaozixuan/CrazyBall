@@ -3,9 +3,9 @@
 ## Experiment 1
 ### Design
 
-	First of all, we set Page to “0”, where necessary initializations are done for the program. SYSTICK is initialized for the body part of the game, and TIM3 is initialized for JOYPAD use only. Then, TFTLCD and Buzzer are initialized, Keys and their interrupts are initialized, as well as USART1 and USART1 interrupt.
+​	First of all, we set Page to “0”, where necessary initializations are done for the program. SYSTICK is initialized for the body part of the game, and TIM3 is initialized for JOYPAD use only. Then, TFTLCD and Buzzer are initialized, Keys and their interrupts are initialized, as well as USART1 and USART1 interrupt.
 
-```
+```C
 u8 Page = 0;
 int main(void)
 {
@@ -29,8 +29,10 @@ int main(void)
 ```
 Figure 1. Page 0: Initialization
 
-	Then, we enter welcome page, print the welcome sentences and enter the next stage.
-```
+
+
+​	Then, we enter welcome page, print the welcome sentences and enter the next stage.
+```C
 if (Page == 1){ //Welcome Page
     printString2412(100, 100, "Welcome to mini Project!", WHITE, BLUE);
     Delay(5000000);
@@ -45,8 +47,10 @@ if (Page == 1){ //Welcome Page
 ```
 Figure 2. Page 1: Welcome Page
 
-	We enter Difficulty Level Page, print the selecting sentences. 
-```
+
+
+​	We enter Difficulty Level Page, print the selecting sentences. 
+```C
 if (Page == 2){ //Difficulty Level Page
     EIE3810_TFTLCD_FillRectangle(0, 480, 0, 800, WHITE);
     printString(120, 300, "Please select the difficulty level:", WHITE, RED);
@@ -58,8 +62,10 @@ if (Page == 2){ //Difficulty Level Page
 ```
 Figure 3. Page 2: Difficulty Level Page
 
-	On this page, KEY_UP and KEY1 interrupts are used to select easy or hard level. An extern universal variant “hard” is exported to the main program to indicate the difficulty level. “hard = 1” implies easy mode, “hard = 2” implies hard mode.
-```
+
+
+​	On this page, KEY_UP and KEY1 interrupts are used to select easy or hard level. An extern universal variant “hard” is exported to the main program to indicate the difficulty level. “hard = 1” implies easy mode, “hard = 2” implies hard mode.
+```C
 void EXTI0_IRQHandler(void)
 {
     if (EIE3810_read_KEY_UP() & (Page == 2)){ //Easy
@@ -67,7 +73,12 @@ void EXTI0_IRQHandler(void)
         printString(120, 400, "Hard", BLUE, WHITE);
         hard = 1;
     }
+```
 Figure 4. KEY_UP interrupt exception in Page 2 to select easy mode
+
+
+
+```
 void EXTI3_IRQHandler(void)
 {
     if (EIE3810_read_KEY1() & (Page == 2)){
@@ -78,8 +89,10 @@ void EXTI3_IRQHandler(void)
 ```
 Figure 5. KEY1 interrupt exception in Page 2 to select hard mode
 
-	We enter KEY0 interrupt. Inside KEY0 interrupt exception, we ask the user to send a random direction from USART1 and enter the next page: USART Page.
-```
+
+
+​	We enter KEY0 interrupt. Inside KEY0 interrupt exception, we ask the user to send a random direction from USART1 and enter the next page: USART Page.
+```C
 void EXTI4_IRQHandler(void)
 {
     if (EIE3810_read_KEY0() & (Page == 2)){
@@ -90,8 +103,10 @@ void EXTI4_IRQHandler(void)
 ```
 Figure 6. KEY0 interrupt exception in Page 2 and enter USART Page
 
-	Inside USART1 exception, the transmitted number is loaded to buffer, which is an extern universal variant exported to the main program to indicate the initial direction of the ball. A sentence indicating the number is printed to the LCD and we enter Game Page.
-```
+
+
+​	Inside USART1 exception, the transmitted number is loaded to buffer, which is an extern universal variant exported to the main program to indicate the initial direction of the ball. A sentence indicating the number is printed to the LCD and we enter Game Page.
+```C
 void USART1_IRQHandler(void)
 {
     u32 CR1;
@@ -132,12 +147,16 @@ void USART1_IRQHandler(void)
 ```
 Figure 7. USART1 interrupt exception and Page 3: USART Page
 
-	Inside the game page, TIM4 is initialized to record the elapsed time of the game (that’s why it is initialized after we enter Game Page). If buffer is smaller and equal to 51 (ASCII Code of 3), the ball will bounce to the right, otherwise, the ball will bounce to the left, which is controlled by “xdir”. “xdir” refers to X-axis direction, “xdir = 1” ball moves to the right and x increases; “xdir = -1” ball moves to the left and x decreases. The angle of bounce is controlled by the increment of y. Basically, the larger the buffer number is, the bigger the y step is. In total, there are 8 different initial directions as shown in the Figure8.
+
+
+​	Inside the game page, TIM4 is initialized to record the elapsed time of the game (that’s why it is initialized after we enter Game Page). If buffer is smaller and equal to 51 (ASCII Code of 3), the ball will bounce to the right, otherwise, the ball will bounce to the left, which is controlled by “xdir”. “xdir” refers to X-axis direction, “xdir = 1” ball moves to the right and x increases; “xdir = -1” ball moves to the left and x decreases. The angle of bounce is controlled by the increment of y. Basically, the larger the buffer number is, the bigger the y step is. In total, there are 8 different initial directions as shown in the Figure8.
 
 Figure 8. 8 different initial directions for the ball
 
-	The refreshment of the ball is put inside a while loop controlled by SYSTICK (task1HeartBeat count to 2 (20ms), Game Page will be refreshed). The idea is quite simple, the original ball is drawn white first and then x, y location of the ball will be updated according to the initial direction and difficulty level. Then, draw the ball red, we will see the ball moving. By the way, the difficulty level is controlled in a very clever way: the x and y step will be timed by “hard”, which is introduced before (“hard = 1” implies easy mode, “hard = 2” implies hard mode.) Thus, in hard mode, the ball will move 2 times faster than in easy mode.
-```
+
+
+​	The refreshment of the ball is put inside a while loop controlled by SYSTICK (task1HeartBeat count to 2 (20ms), Game Page will be refreshed). The idea is quite simple, the original ball is drawn white first and then x, y location of the ball will be updated according to the initial direction and difficulty level. Then, draw the ball red, we will see the ball moving. By the way, the difficulty level is controlled in a very clever way: the x and y step will be timed by “hard”, which is introduced before (“hard = 1” implies easy mode, “hard = 2” implies hard mode.) Thus, in hard mode, the ball will move 2 times faster than in easy mode.
+```c
         if (Page == 4){ //Game Page
             count = 0;
 
@@ -271,3 +290,167 @@ Figure 8. 8 different initial directions for the ball
 }
 ```
 Figure 9. Page 4: Game Page
+
+
+
+​	For checking the boundary conditions of the ball. If x is between 10 to 470, the ball will move to its next location according “xdir”; if x is out of the range of 10 to 470 (the ball is out of the screen), “xdir” will be changed: +1 to -1, -1 to +1, thus, x will be updated to the opposite direction. The buzzer is turned on and tuned off after a while, Bounces is incremented by one and updated to the screen. The same scenario happens for the Y-axis. If y is between 20 to 780, the ball will move to its next location according “ydir” and the number of buffer; if y is out of the range of 20 to 780 (the ball is out of the screen), we check the x value. If x value is between x2 and x2 + 80 (y > 780, checking lower bench) or x1 and x1 + 80 (y < 20, checking upper bench) “ydir” will be changed: +1 to -1, -1 to +1, thus, y will be updated to the opposite direction. The buzzer is turned on and tuned off after a while, Bounces is incremented by one and updated to the screen; otherwise, the user failed to catch the ball using the bench and game over, we enter Page 5: End Page to break the while loop of Game Page. Some text indicating the winner will show on the screen.
+
+​	During the game, KEY0 and KEY2 interrupt are enabled to move the lower bench.
+```c
+   if (EIE3810_read_KEY0() & (Page == 4)){
+        EIE3810_TFTLCD_FillRectangle(x2, 80, 795, 5, WHITE);
+        if (x2 < 400){
+            x2 = x2 + 25;
+        }
+        EIE3810_TFTLCD_FillRectangle(x2, 80, 795, 5, BLACK);
+    }
+```
+Figure 10. KEY0 interrupt exception in Page 4: move lower bench to the right
+
+
+
+```c
+void EXTI2_IRQHandler(void)
+{
+    if ((EIE3810_read_KEY2()) & (Page == 4)){
+        EIE3810_TFTLCD_FillRectangle(x2, 80, 795, 5, WHITE);
+        if (x2 > 0){
+            x2 = x2 - 25;
+        }
+        EIE3810_TFTLCD_FillRectangle(x2, 80, 795, 5, BLACK);
+    }
+    EXTI->PR = 1<<2;//pending register
+}
+```
+Figure 11. KEY2 interrupt exception in Page 4: move lower bench to the left
+
+
+
+​	During the game, KEY1 interrupt is enabled to pause and resume the game. If you press KEY1 for the first time (count = 0), Page is set to be 6. Thus, the processor will jump out of Game page and jump to Stop Page. Inside Stop Page, we print a sentence telling user that we are in Stop mode and set count to 1, then, enter an endless loop. Until KEY1 is pressed again (count = 1), the processor jumps to the interrupt exception and go back to Game Page and continue the game. Inside Game Page, count is set to 0 for the next pause.
+```c
+void EXTI3_IRQHandler(void)
+{
+    if (EIE3810_read_KEY1() && (Page == 4) && (count == 0)){
+        Page = 6; // Go to Stop Page
+        }
+    if (EIE3810_read_KEY1() && (Page == 6) && (count == 1)){
+        Page = 4; // Go back to Game Page
+        printString(120, 500, "You are in STOP mode", WHITE, WHITE); //Clear
+    }
+    EXTI->PR = 1<<3;//pending register
+}
+Figure 12. KEY1 interrupt exception in Page 4: pause and resume
+
+        if (Page == 6){ //Stop Page
+            printString(120, 500, "You are in STOP mode", WHITE, BLUE);
+            count = 1;
+            while(Page == 6);
+        }
+```
+Figure 13. Page 6: Stop Page
+
+
+
+​	JOYPAD_Read() is triggered by TIM3 to read the JOYPAD input every 10ms. All the functions of Keys can be realized on the JOYPAD. Start button can pause/continue the game, Left and Right button can move the upper bench in Game Page. Up and Down button can select difficulty level in Page 2.
+```c
+void TIM3_IRQHandler(void)
+{
+    if(TIM3->SR&1<<0)
+    {
+        
+        u8 JoyPadInput;
+        JoyPadInput=JOYPAD_Read();
+        if (JoyPadInput)
+        {
+            u8 button1=JoyPadInput & 0x01;
+            u8 button2=JoyPadInput & 0x02;
+            u8 button3=JoyPadInput & 0x04;
+            u8 button4=JoyPadInput & 0x08;
+            u8 button5=JoyPadInput & 0x10;
+            u8 button6=JoyPadInput & 0x20;
+            u8 button7=JoyPadInput & 0x40;
+            u8 button8=JoyPadInput & 0x80;
+            if (button4){
+                button++;
+                if ((button >2) && (Page == 4) && (count == 0)){
+                    Page = 6; // Go to Stop Page
+                    EIE3810_turn_off_LED1();
+                    button = 0;
+                }
+                if ((button >2) && (Page == 6) && (count == 1)){
+                    Page = 4; // Go back to Game Page
+                    EIE3810_turn_on_LED1();
+                    printString(120, 500, "You are in STOP mode", WHITE, WHITE); //Clear
+                    button = 0;
+                }
+            }   
+            else if (button5>>4){
+                button++;
+                if ((button > 2) && (Page == 2)){
+                    printString(120, 350, "Easy", WHITE, BLUE);
+                    printString(120, 400, "Hard", BLUE, WHITE);
+                    hard = 1;
+                    button = 0;
+                }
+            }
+            else if (button6>>5){
+                button++;
+                if ((button > 2)  && (Page == 2)){
+                    printString(120, 350, "Easy", BLUE, WHITE);
+                    printString(120, 400, "Hard", WHITE, BLUE);
+                    hard = 2;
+                    button = 0;
+                }
+            }
+            else if ((button7>>6) && (Page == 4)){
+                EIE3810_TFTLCD_FillRectangle(x1, 80, 0, 5, WHITE);
+                if (x1 > 0){
+                    x1--;
+                }
+                EIE3810_TFTLCD_FillRectangle(x1, 80, 0, 5, BLACK);
+            }   
+            else if ((button8>>7) && (Page == 4)){
+                EIE3810_TFTLCD_FillRectangle(x1, 80, 0, 5, WHITE);
+                if (x1 <400){
+                    x1++;
+                }
+                EIE3810_TFTLCD_FillRectangle(x1, 80, 0, 5, BLACK);
+            }
+            else{
+                count = 0;
+            }
+        }
+    }
+    TIM3->SR &=~(1<<0);
+}
+```
+Figure 14. TIM3: JOYPAD
+
+
+
+
+​	TIM4 is initialized to function as a real time clock, which updates the strings on the LCD every second, showing the Number of Bounces, Upper and Lower Player Score and the elapsed Time.
+```c
+void TIM4_IRQHandler(void){
+    if ((TIM4->SR & 1<<0) && (Page == 4)){   //Update interrupt pending
+        printString(0,700 - 36,"Number of Bounces:", RED, WHITE);
+        printString(9*18,700 - 36, bounces ,RED,WHITE);
+        printString(0,700,"Upper Player Score:", RED, WHITE);
+        printString(9*18,700, upper ,RED,WHITE);
+        printString(0,700+36,"Lower Player Score:", RED, WHITE);
+        printString(9*18,700+36, lower ,RED,WHITE);
+        printString(0,700+72,"Time: ", RED, WHITE);
+        printString(9*18,700+72,t,WHITE,WHITE);
+        Timer ++;
+        sprintf(t,"%d",Timer);
+        printString(0,700+72,"Time: ", RED, WHITE);
+        printString(9*18,700+72,t,RED,WHITE);
+        }
+    TIM4->SR &= ~(1<<0);    //Clear the update.
+}
+```
+Figure 15. TIM4: Update strings of Number of Bounces, Upper and Lower Player Score and the elapsed Time
+
+
+
+​	By now, all the functions have already been achieved.

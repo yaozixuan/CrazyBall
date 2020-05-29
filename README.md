@@ -1,5 +1,10 @@
 # ARM_bouncing_ball_game
 
+## Demo
+
+![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/demo/demo.gif)
+![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/demo/demo2.gif)
+
 ## Experiment 1
 ### Design
 
@@ -669,8 +674,3 @@ Figure 33. Acceleration
 
 ​	We successfully achieved 3 improvements as shown above.
 
-
-
-## Appendix
-
-Two videos can be found here:

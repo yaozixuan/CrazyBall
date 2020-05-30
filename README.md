@@ -1,9 +1,9 @@
-# ARM_bouncing_ball_game
+# CrazyBall
 
 ## Demo
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/demo/demo.gif)
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/demo/demo2.gif)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/demo/demo.gif)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/demo/demo2.gif)
 
 ## Experiment 1
 ### Design
@@ -156,7 +156,7 @@ Figure 7. USART1 interrupt exception and Page 3: USART Page
 
 ​	Inside the game page, TIM4 is initialized to record the elapsed time of the game (that’s why it is initialized after we enter Game Page). If buffer is smaller and equal to 51 (ASCII Code of 3), the ball will bounce to the right, otherwise, the ball will bounce to the left, which is controlled by “xdir”. “xdir” refers to X-axis direction, “xdir = 1” ball moves to the right and x increases; “xdir = -1” ball moves to the left and x decreases. The angle of bounce is controlled by the increment of y. Basically, the larger the buffer number is, the bigger the y step is. In total, there are 8 different initial directions as shown in the Figure8.
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/direction.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/direction.png)
 
 Figure 8. 8 different initial directions for the ball
 
@@ -470,25 +470,25 @@ Figure 15. TIM4: Update strings of Number of Bounces, Upper and Lower Player Sco
 
 ### Test Result
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/Welcome.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/Welcome.png)
 
 Figure 16. Welcome Page
 
 
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/Easy%20Hard.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/Easy%20Hard.png)
 
 Figure 17. Difficulty Level Page: Easy & Hard
 
 
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/USART.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/USART.png)
 
 Figure 18. USART Page
 
 
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/Right.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/Right.png)
 
 Figure 19. Game page: Bounce at the right side, Number of Bounces +1
 
@@ -498,13 +498,13 @@ Figure 19. Game page: Bounce at the right side, Number of Bounces +1
 
 
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/Upper.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/Upper.png)
 
 Figure 20. Game page: Bounce at the upper side, Number of Bounces +1, Upper Player Score +1
 
 
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/Lower.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/Lower.png)
 
 Figure 21. Game page: Bounce at the lower side, Number of Bounces +1, Lower Player Score +1
 
@@ -514,7 +514,7 @@ Figure 21. Game page: Bounce at the lower side, Number of Bounces +1, Lower Play
 
 
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/End.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/End.png)
 
  Figure 22. Pause and Resume                               Figure 23. End Page
 
@@ -652,19 +652,19 @@ Figure 30. JOYPAD Button Up in Game Page to speed up the movement of the ball
 
 ​	Color changing feature has been shown in Test Result of Experiment 1.
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/CPU%20JOYPAD.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/CPU%20JOYPAD.png)
 
 Figure 31. CPU or JOYPAD selection Page
 
 
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/CPU%20JOYPAD%202.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/CPU%20JOYPAD%202.png)
 
 Figure 32. Indicating CPU or JOYPAD mode
 
 
 
-![](https://github.com/yaozixuan/ARM_bouncing_ball_game/blob/master/pic/Acceleration.png)
+![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/pic/Acceleration.png)
 
 Figure 33. Acceleration
 

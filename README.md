@@ -2,7 +2,7 @@
 
 ## Demo
 
-![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/demo/demo.gif)![](https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/demo/demo2.gif)
+<img src="https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/demo/demo.gif" style="zoom:83%;" /><img src="https://raw.githubusercontent.com/yaozixuan/CrazyBall/master/demo/demo2.gif" style="zoom:75%;" />
 
 ## Experiment 1
 ### Design
